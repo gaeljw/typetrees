@@ -1,2 +1,8 @@
 *.class
 *.log
+.vscode/
+target/
+.idea/
+*.iml
+.metals/
+.bsp/

@@ -1,0 +1,40 @@
+:testdir: src/test/scala/io/github/gaeljw/typetrees
+
+= TypeTrees
+
+This library is intended to solve the use case of getting the erased types of
+a (generic) parameter. Something which was possible in Scala 2 with `+TypeTag+`
+and is now a bit more complex with Scala 3.
+
+This is implemented thanks to a macro.
+
+*Warning:* for most use cases, it needs to be part of a `+inline+` method.
+
+== Usage
+
+[source,scala]
+----
+include::{testdir}/CodeSamples.scala[tag=mainusage,indent=0]
+----
+<1> Get a `+TypeTreeTag+` for a generic type `+T+`
+<2> Get a `+ClassTag+` for this type
+<3> Get a `+TypeTreeTag+` for each type parameters if any
+
+== Examples
+
+The main usage is as follows, within a generic `+inline+` method:
+
+[source,scala]
+----
+include::{testdir}/TestBehavior.scala[tag=exampleInlineDef,indent=0]
+----
+
+Or:
+
+[source,scala]
+----
+include::{testdir}/TestBehavior.scala[tag=exampleInlineDefMap,indent=0]
+----
+
+It can also be applied to non generic types: in such case it doesn't need to
+be part of a `+inline def+`.
