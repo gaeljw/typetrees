@@ -14,7 +14,17 @@ This is implemented thanks to a macro.
 
 [source,scala]
 ----
-include::{testdir}/CodeSamples.scala[tag=mainusage,indent=0]
+import io.github.gaeljw.typetrees.TypeTreeTag
+import io.github.gaeljw.typetrees.TypeTreeTagMacros.typeTreeTag
+
+import scala.reflect.ClassTag
+
+val tag: TypeTreeTag = typeTreeTag[T] // <1>
+
+val classTag: ClassTag[_] = tag.self // <2>
+val actualClass: Class[_] = classTag.runtimeClass
+
+val typeParameters: List[TypeTreeTag] = tag.args // <3>
 ----
 <1> Get a `+TypeTreeTag+` for a generic type `+T+`
 <2> Get a `+ClassTag+` for this type
@@ -26,14 +36,21 @@ The main usage is as follows, within a generic `+inline+` method:
 
 [source,scala]
 ----
-include::{testdir}/TestBehavior.scala[tag=exampleInlineDef,indent=0]
+inline def someGenericMethod[T](t: T): String = {
+    val tag: TypeTreeTag = typeTreeTag[T]
+    s"I have been called with a parameter of type $tag"
+}
 ----
 
 Or:
 
 [source,scala]
 ----
-include::{testdir}/TestBehavior.scala[tag=exampleInlineDefMap,indent=0]
+inline def someGenericMapMethod[K,V](map: Map[K,V]): String = {
+    val keyTag: TypeTreeTag = typeTreeTag[K]
+    val valueTag: TypeTreeTag = typeTreeTag[V]
+    s"I have been called with a Map where key is of type $keyTag and value is of type $valueTag"
+}
 ----
 
 It can also be applied to non generic types: in such case it doesn't need to
