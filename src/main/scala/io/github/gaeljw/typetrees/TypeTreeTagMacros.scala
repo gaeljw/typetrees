@@ -33,16 +33,14 @@ object TypeTreeTagMacros {
   private def getClassTag[T](using Type[T], Quotes): Expr[ClassTag[T]] = {
     import quotes.reflect._
 
-    val searchResult : ImplicitSearchResult = Implicits.search(TypeRepr.of[ClassTag[T]])
-
-    searchResult match {
-      case x : ImplicitSearchSuccess =>
-        // println(x.tree)
-        x.tree.asExprOf[ClassTag[T]]
-      case x: ImplicitSearchFailure =>
-        report.error("ImplicitSearchFailure\n" + x.explanation, Position.ofMacroExpansion)
+    Expr.summon[ClassTag[T]] match {
+      case Some(ct) =>
+        ct
+      case None =>
+        report.error(s"Unable to find a ClassTag for type ${Type.show[T]}", Position.ofMacroExpansion)
         throw new Exception("Error when applying macro")
     }
+
   }
   
 }
