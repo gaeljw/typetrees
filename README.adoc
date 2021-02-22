@@ -1,6 +1,10 @@
 :testdir: src/test/scala/io/github/gaeljw/typetrees
 
 = TypeTrees
+:toc:
+
+image::https://img.shields.io/maven-central/v/io.github.gaeljw/typetrees_3.0.0-M3.svg[]
+image::https://github.com/gaeljw/typetrees/workflows/Scala%20CI/badge.svg[]
 
 This library is intended to solve the use case of getting the erased types of
 a (generic) parameter. Something which was possible in Scala 2 with `+TypeTag+`
@@ -9,6 +13,24 @@ and is now a bit more complex with Scala 3.
 This is implemented thanks to a macro.
 
 *Warning:* for most use cases, it needs to be part of a `+inline+` method.
+
+== Get it
+
+.sbt
+[source]
+----
+libraryDependencies += "io.github.gaeljw" % "typetrees" % typetreesVersion
+----
+
+.Maven
+[source,xml]
+----
+<dependency>
+  <groupId>io.github.gaeljw</groupId>
+  <artifactId>typetrees_${scala.version}</artifactId>
+  <version>${typetrees.version}</version>
+</dependency>
+----
 
 == Usage
 
