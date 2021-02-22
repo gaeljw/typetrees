@@ -1,0 +1,5 @@
+TODO: complete this doc with more details
+
+----
+sbt "release cross with-defaults"
+----
