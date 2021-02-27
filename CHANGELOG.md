@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v0.2.1
+
+- Provide `versionScheme` to users of the library so that sbt can raise eviction errors
+
 ## v0.2.0
 
 - Target Scala 3.0.0-RC1
