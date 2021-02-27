@@ -47,6 +47,7 @@ lazy val root = project
 // Versioning policy
 
 ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
 
 // Release & Publish
 
