@@ -1,7 +1,7 @@
 
 # Changelog
 
-## Next
+## v0.1.1
 
 - Setup Github Actions for releasing
 
