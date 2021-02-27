@@ -1,7 +1,7 @@
 
 # Changelog
 
-## v0.2.1
+## Next
 
 - Provide `versionScheme` to users of the library so that sbt can raise eviction errors
 
