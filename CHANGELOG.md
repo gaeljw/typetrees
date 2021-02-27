@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v0.2.0
+
+- Target Scala 3.0.0-RC1
+
 ## v0.1.1
 
 - Setup Github Actions for releasing
