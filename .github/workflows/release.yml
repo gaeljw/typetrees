@@ -2,6 +2,10 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version'
+        required: true
 
 jobs:
   release:
@@ -12,8 +16,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Set up Git
+        run: |
+          git config --global user.name "TypeTrees bot"
+          git config --global user.email "bot@typetrees.github.io"
       - name: Release
-        run: sbt "release cross with-defaults"
+        run: sbt "release cross with-defaults release-version ${{ github.event.inputs.releaseVersion }}"
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
