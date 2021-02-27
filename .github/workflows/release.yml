@@ -20,6 +20,7 @@ jobs:
         run: |
           git config --global user.name "TypeTrees bot"
           git config --global user.email "bot@typetrees.github.io"
+      - uses: olafurpg/setup-gpg@v3
       - name: Release
         run: sbt "release cross with-defaults release-version ${{ github.event.inputs.releaseVersion }}"
         env:
