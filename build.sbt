@@ -44,6 +44,10 @@ lazy val root = project
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
   )
 
+// Versioning policy
+
+ThisBuild / versionScheme := Some("early-semver")
+
 // Release & Publish
 
 Global / publishMavenStyle := true
