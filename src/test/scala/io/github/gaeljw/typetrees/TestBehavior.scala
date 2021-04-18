@@ -30,9 +30,10 @@ object BusinessClass {
   // end::exampleInlineDef[]
 
   // tag::exampleInlineDefMap[]
-  inline def someGenericMapMethod[K,V](map: Map[K,V]): String = {
-    val keyTag: TypeTreeTag = typeTreeTag[K]
-    val valueTag: TypeTreeTag = typeTreeTag[V]
+  inline def someGenericMapMethod[T <: Map[_,_]](map: T): String = {
+    val mapTag: TypeTreeTag = typeTreeTag[T]
+    val keyTag: TypeTreeTag = mapTag.args(0)
+    val valueTag: TypeTreeTag = mapTag.args(1)
     s"I have been called with a Map where key is of type $keyTag and value is of type $valueTag"
   }
   // end::exampleInlineDefMap[]
