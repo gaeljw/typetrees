@@ -1,5 +1,3 @@
-addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.4")
-
 // Version policy check
 addSbtPlugin("ch.epfl.scala" % "sbt-version-policy" % "1.0.0-RC5")
 
