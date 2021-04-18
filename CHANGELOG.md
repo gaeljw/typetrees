@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v0.3.1
+
+- Build with sbt 1.5
+
 ## v0.3.0
 
 - Provide `versionScheme` to users of the library so that sbt can raise eviction errors
