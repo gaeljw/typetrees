@@ -1,6 +1,10 @@
 
 # Changelog
 
+## v0.4.0
+
+- Target Scala 3.0.0-RC3
+
 ## v0.3.1
 
 - Build with sbt 1.5
