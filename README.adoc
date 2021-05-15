@@ -7,13 +7,9 @@
 image::https://img.shields.io/maven-central/v/io.github.gaeljw/typetrees_3.0.0-RC3.svg[]
 image::https://github.com/gaeljw/typetrees/workflows/Scala%20CI/badge.svg[]
 
-This library is intended to solve the use case of getting the erased types of
-a (generic) parameter. Something which was possible in Scala 2 with `+TypeTag+`
+This library is intended to solve the use case of getting the erased types of a (generic) parameter.
+Something which was possible in Scala 2 with `+TypeTag+`
 and is now a bit more complex with Scala 3.
-
-This is implemented thanks to a macro.
-
-*Warning:* for most use cases, it needs to be part of a `+inline+` method.
 
 == Get it
 
@@ -35,6 +31,72 @@ libraryDependencies += "io.github.gaeljw" % "typetrees" % typetreesVersion
 
 == Usage
 
+Two implementations are available:
+
+* using implicits (`given` s)
+* using macro
+
+|===
+|Implementation |Pros 👍 |Cons 👎
+
+|Implicits
+|Easier
+|Only supports up to 4 generic parameters (i.e. a type `T[A, B, C, D]`)
+
+|Macro
+|Can handle all cases
+|Requires to be used in `inline` method
+|===
+
+=== Using implicits
+
+[source,scala]
+----
+import io.github.gaeljw.typetrees.TypeTree
+import io.github.gaeljw.typetrees.TypeTreeTag
+
+import scala.reflect.ClassTag
+
+val tag: TypeTreeTag = summon[TypeTree[T]].tag // <1>
+
+val classTag: ClassTag[_] = tag.self // <2>
+val actualClass: Class[_] = classTag.runtimeClass
+
+val typeParameters: List[TypeTreeTag] = tag.args // <3>
+----
+<1> Get a `+TypeTreeTag+` for a generic type `+T+`
+<2> Get a `+ClassTag+` for this type
+<3> Get a `+TypeTreeTag+` for each type parameters if any
+
+==== Examples
+
+The main usage is as follows:
+
+[source,scala]
+----
+def someGenericMethod[T](t: T)(using typeTree: TypeTree[T]): String = {
+    val tag: TypeTreeTag = typeTree.tag
+    s"I have been called with a parameter of type $tag"
+}
+
+someGenericMethod(Map[String, Int]())
+// Gives: I have been called with a parameter of type TypeTreeTag(scala.collection.immutable.Map,List(TypeTreeTag(java.lang.String,List()), TypeTreeTag(Int,List())))
+----
+
+Or with context bounds:
+
+[source,scala]
+----
+def someGenericMethod[T : TypeTree](t: T): String = {
+    val tag: TypeTreeTag = summon[TypeTree[T]].tag
+    s"I have been called with a parameter of type $tag"
+}
+----
+
+You can find more examples in our link:{testdir}/TestBehaviorImplicits.scala[tests].
+
+=== Using macro
+
 [source,scala]
 ----
 import io.github.gaeljw.typetrees.TypeTreeTag
@@ -53,7 +115,7 @@ val typeParameters: List[TypeTreeTag] = tag.args // <3>
 <2> Get a `+ClassTag+` for this type
 <3> Get a `+TypeTreeTag+` for each type parameters if any
 
-== Examples
+==== Examples
 
 The main usage is as follows, within a generic `+inline+` method:
 
@@ -63,6 +125,9 @@ inline def someGenericMethod[T](t: T): String = {
     val tag: TypeTreeTag = typeTreeTag[T]
     s"I have been called with a parameter of type $tag"
 }
+
+someGenericMethod(Map[String, Int]())
+// Gives: I have been called with a parameter of type TypeTreeTag(scala.collection.immutable.Map,List(TypeTreeTag(java.lang.String,List()), TypeTreeTag(Int,List())))
 ----
 
 Or:
@@ -77,5 +142,6 @@ inline def someGenericMapMethod[T <: Map[_,_]](map: T): String = {
 }
 ----
 
-It can also be applied to non generic types: in such case it doesn't need to
-be part of a `+inline def+` but you probably can just use regular `ClassTag` then.
+It can also be applied to non generic types: in such case it doesn't need to be part of a `+inline def+` but you probably can just use regular `ClassTag` then.
+
+You can find more examples in our link:{testdir}/TestBehaviorMacro.scala[tests].
