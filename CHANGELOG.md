@@ -1,6 +1,11 @@
 
 # Changelog
 
+## v0.5.0
+
+- Target Scala 3.0.0
+- Offer another implementation using implicits rather than macro
+
 ## v0.4.0
 
 - Target Scala 3.0.0-RC3
