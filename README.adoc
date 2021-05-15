@@ -3,8 +3,8 @@
 = TypeTrees
 :toc:
 
-[link=https://search.maven.org/artifact/io.github.gaeljw/typetrees_3.0.0-RC3]
-image::https://img.shields.io/maven-central/v/io.github.gaeljw/typetrees_3.0.0-RC3.svg[]
+[link=https://search.maven.org/artifact/io.github.gaeljw/typetrees_3.0.0]
+image::https://img.shields.io/maven-central/v/io.github.gaeljw/typetrees_3.0.0.svg[]
 image::https://github.com/gaeljw/typetrees/workflows/Scala%20CI/badge.svg[]
 
 This library is intended to solve the use case of getting the erased types of a (generic) parameter.
