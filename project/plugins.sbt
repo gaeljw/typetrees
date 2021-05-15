@@ -1,5 +1,5 @@
 // Version policy check
-addSbtPlugin("ch.epfl.scala" % "sbt-version-policy" % "1.0.0-RC5")
+addSbtPlugin("ch.epfl.scala" % "sbt-version-policy" % "1.0.1")
 
 // Release
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.0.15")
