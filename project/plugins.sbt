@@ -1,3 +1,6 @@
+// Formatting
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.2")
+
 // Version policy check
 addSbtPlugin("ch.epfl.scala" % "sbt-version-policy" % "1.0.1")
 
