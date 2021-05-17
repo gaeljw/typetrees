@@ -12,10 +12,10 @@ trait TypeTree[T] {
 object TypeTree {
 
   given typeTree4[T[
-      A,
-      B,
-      C,
-      D
+      _,
+      _,
+      _,
+      _
   ], A: TypeTree, B: TypeTree, C: TypeTree, D: TypeTree](using
       ClassTag[T[A, B, C, D]]
   ): TypeTree[T[A, B, C, D]] with {
@@ -30,7 +30,7 @@ object TypeTree {
     )
   }
 
-  given typeTree3[T[A, B, C], A: TypeTree, B: TypeTree, C: TypeTree](using
+  given typeTree3[T[_, _, _], A: TypeTree, B: TypeTree, C: TypeTree](using
       ClassTag[T[A, B, C]]
   ): TypeTree[T[A, B, C]] with {
     def tag = TypeTreeTag(
@@ -43,7 +43,7 @@ object TypeTree {
     )
   }
 
-  given typeTree2[T[A, B], A: TypeTree, B: TypeTree](using
+  given typeTree2[T[_, _], A: TypeTree, B: TypeTree](using
       ClassTag[T[A, B]]
   ): TypeTree[T[A, B]] with {
     def tag = TypeTreeTag(
@@ -52,7 +52,7 @@ object TypeTree {
     )
   }
 
-  given typeTree1[T[A], A: TypeTree](using ClassTag[T[A]]): TypeTree[T[A]]
+  given typeTree1[T[_], A: TypeTree](using ClassTag[T[A]]): TypeTree[T[A]]
     with {
     def tag = TypeTreeTag(summon[ClassTag[T[A]]], List(summon[TypeTree[A]].tag))
   }
