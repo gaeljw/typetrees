@@ -17,15 +17,16 @@ object TypeTreeTagMacros {
         case '[t] => getTypeTree[t]
       }
     }
-    
+
     val tpr: TypeRepr = TypeRepr.of[T]
     val typeParams: List[TypeRepr] = tpr match {
       case a: AppliedType => a.args
-      case _ => Nil
+      case _              => Nil
     }
 
     val selfTag: Expr[ClassTag[T]] = getClassTag[T]
-    val argsTrees: Expr[List[TypeTreeTag]] = Expr.ofList(typeParams.map(getTypeTreeRec))
+    val argsTrees: Expr[List[TypeTreeTag]] =
+      Expr.ofList(typeParams.map(getTypeTreeRec))
 
     '{ TypeTreeTag($selfTag, $argsTrees) }
   }
@@ -37,10 +38,13 @@ object TypeTreeTagMacros {
       case Some(ct) =>
         ct
       case None =>
-        report.error(s"Unable to find a ClassTag for type ${Type.show[T]}", Position.ofMacroExpansion)
+        report.error(
+          s"Unable to find a ClassTag for type ${Type.show[T]}",
+          Position.ofMacroExpansion
+        )
         throw new Exception("Error when applying macro")
     }
 
   }
-  
+
 }
