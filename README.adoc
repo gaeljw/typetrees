@@ -16,7 +16,7 @@ and is now a bit more complex with Scala 3.
 .sbt
 [source]
 ----
-libraryDependencies += "io.github.gaeljw" % "typetrees" % typetreesVersion
+libraryDependencies += "io.github.gaeljw" %% "typetrees" % typetreesVersion
 ----
 
 .Maven
