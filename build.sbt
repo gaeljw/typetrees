@@ -3,7 +3,7 @@ import xerial.sbt.Sonatype.sonatypeSettings
 
 // Scala version(s)
 
-val scala3Version = "3.0.2"
+val scala3Version = "3.7.0"
 
 // Metadata
 
