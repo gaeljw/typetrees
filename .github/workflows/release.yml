@@ -30,7 +30,7 @@ jobs:
             --yes -v \
             --output=/dev/null \
             --pinentry-mode loopback \
-            --passphrase "${{ inputs.gpg-passphrase }}" temp.txt
+            --passphrase "${{ secrets.PGP_PASSPHRASE }}" temp.txt
           rm temp.txt
         shell: bash
       - name: Release
