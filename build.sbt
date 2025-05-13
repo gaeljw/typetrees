@@ -1,5 +1,6 @@
 import ReleaseTransformations._
 import xerial.sbt.Sonatype.sonatypeSettings
+import xerial.sbt.Sonatype.sonatypeCentralHost
 
 // Scala version(s)
 
@@ -70,3 +71,5 @@ releaseProcess := Seq[ReleaseStep](
   commitNextVersion,
   pushChanges
 )
+
+ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
