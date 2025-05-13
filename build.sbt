@@ -55,6 +55,7 @@ Global / publishMavenStyle := true
 Global / publishTo := sonatypePublishToBundle.value
 
 // https://github.com/xerial/sbt-sonatype#using-with-sbt-release-plugin
+releaseVersionBump := sbtrelease.Version.Bump.NextStable // Required since 1.4.0
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
