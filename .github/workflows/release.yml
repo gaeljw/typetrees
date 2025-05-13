@@ -24,7 +24,6 @@ jobs:
           git config --global user.email "bot@typetrees.github.io"
       - name: Set up GPG
         run: |
-          echo ${{secrets.PGP_PASSPHRASE}} | sed 's/./& /g'
           echo -e "${{ secrets.PGP_SECRET }}" | base64 --decode | gpg --batch --import --no-tty
           echo "hello world" > temp.txt
           gpg --detach-sig \
