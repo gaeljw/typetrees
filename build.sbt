@@ -1,5 +1,6 @@
 import ReleaseTransformations._
 import xerial.sbt.Sonatype.sonatypeSettings
+import xerial.sbt.Sonatype.sonatypeCentralHost
 
 // Scala version(s)
 
@@ -55,6 +56,7 @@ Global / publishMavenStyle := true
 Global / publishTo := sonatypePublishToBundle.value
 
 // https://github.com/xerial/sbt-sonatype#using-with-sbt-release-plugin
+releaseVersionBump := sbtrelease.Version.Bump.NextStable // Required since 1.4.0
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
@@ -69,3 +71,5 @@ releaseProcess := Seq[ReleaseStep](
   commitNextVersion,
   pushChanges
 )
+
+ThisBuild / sonatypeCredentialHost := sonatypeCentralHost

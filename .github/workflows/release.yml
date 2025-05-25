@@ -17,12 +17,22 @@ jobs:
         with:
           java-version: 11
           distribution: 'adopt'
+      - uses: sbt/setup-sbt@v1
       - name: Set up Git
         run: |
           git config --global user.name "TypeTrees bot"
           git config --global user.email "bot@typetrees.github.io"
       - name: Set up GPG
-        run: echo "${{ secrets.PGP_SECRET }}" | base64 --decode | gpg --batch --import
+        run: |
+          echo -e "${{ secrets.PGP_SECRET }}" | base64 --decode | gpg --batch --import --no-tty
+          echo "hello world" > temp.txt
+          gpg --detach-sig \
+            --yes -v \
+            --output=/dev/null \
+            --pinentry-mode loopback \
+            --passphrase "${{ secrets.PGP_PASSPHRASE }}" temp.txt
+          rm temp.txt
+        shell: bash
       - name: Release
         run: sbt "release cross with-defaults release-version ${{ github.event.inputs.releaseVersion }}"
         env:
