@@ -42,7 +42,7 @@ lazy val root = project
 
     scalaVersion := scala3Version,
 
-    javacOptions ++= Seq("-source", "17", "-target", "17"),
+    javacOptions ++= Seq("--release", "17"),
     scalacOptions += "-java-output-version:17",
 
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
