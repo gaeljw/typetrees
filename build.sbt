@@ -1,6 +1,6 @@
 // Scala version(s)
 
-val scala3Version = "3.3.8"
+val scala3Version = "3.9.0"
 
 // Metadata
 
