@@ -1,7 +1,3 @@
-import ReleaseTransformations._
-import xerial.sbt.Sonatype.sonatypeSettings
-import xerial.sbt.Sonatype.sonatypeCentralHost
-
 // Scala version(s)
 
 val scala3Version = "3.3.8"
@@ -54,25 +50,7 @@ ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
 
 // Release & Publish
-
-Global / publishMavenStyle := true
-Global / publishTo := sonatypePublishToBundle.value
-
-// https://github.com/xerial/sbt-sonatype#using-with-sbt-release-plugin
-releaseVersionBump := sbtrelease.Version.Bump.NextStable // Required since 1.4.0
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommandAndRemaining("publishSigned"),
-  releaseStepCommand("sonatypeBundleRelease"),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges
-)
-
-ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
+//
+// Handled by sbt-ci-release (see project/plugins.sbt): version, publishTo and
+// publishMavenStyle are managed by the plugin, do not set them here.
+// https://github.com/sbt/sbt-ci-release
