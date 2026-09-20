@@ -1,41 +1,27 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      releaseVersion:
-        description: 'Release version'
-        required: true
+  push:
+    branches: [ main ]
+    tags: [ "**" ]
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - name: Set up JDK
         uses: actions/setup-java@v6
         with:
           java-version: 17
           distribution: 'temurin'
       - uses: sbt/setup-sbt@v1
-      - name: Set up Git
-        run: |
-          git config --global user.name "TypeTrees bot"
-          git config --global user.email "bot@typetrees.github.io"
-      - name: Set up GPG
-        run: |
-          echo -e "${{ secrets.PGP_SECRET }}" | base64 --decode | gpg --batch --import --no-tty
-          echo "hello world" > temp.txt
-          gpg --detach-sig \
-            --yes -v \
-            --output=/dev/null \
-            --pinentry-mode loopback \
-            --passphrase "${{ secrets.PGP_PASSPHRASE }}" temp.txt
-          rm temp.txt
-        shell: bash
       - name: Release
-        run: sbt "release cross with-defaults release-version ${{ github.event.inputs.releaseVersion }}"
+        run: sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
